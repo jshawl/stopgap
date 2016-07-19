@@ -1,0 +1,13 @@
+<h2>/GET {{resource}}</h2>
+
+<pre>
+{{data}}
+</pre>
+
+<pre>
+$ curl http://localhost:3000/{{projectId}}/{{resource}}.json
+</pre>
+
+{{#each raw}}
+<li><a href='{{../url}}/{{../projectId}}/{{../resource}}/{{this.id}}'>{{../url}}/{{../projectId}}/{{../resource}}/{{this.id}}</a></li>
+{{/each}}

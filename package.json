@@ -1,0 +1,27 @@
+{
+  "name": "fake-rest-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jshawl/fake-rest-api.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jshawl/fake-rest-api/issues"
+  },
+  "homepage": "https://github.com/jshawl/fake-rest-api#readme",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "hbs": "^4.0.0",
+    "mongoose": "^4.5.5",
+    "mongoose-lifecycle": "^1.0.0"
+  }
+}
