@@ -13,6 +13,13 @@ get '/' do
   erb :index
 end
 
+get '/:project_id/:resource/:entity_id' do
+  @project = Project.find_by(sha:params[:project_id])
+  @resource = @project.resources.find_by(title: params[:resource])
+  @entity = @resource.entities.find(params[:entity_id])
+  erb :'resources/index'
+end
+
 get '/:project_id/:resource.json' do
   @project = Project.find_by(sha:params[:project_id])
   @resource = @project.resources.find_by(title: params[:resource])

@@ -1,9 +1,26 @@
-<h2>GET /<%= @resource.title %></h2>
+<h2>GET /<%= @resource.title %><% if @entity %>/<%= @entity.id %><% end %></h2>
 
 <pre>
+<% if @entity %>
+<%= JSON.pretty_generate(@entity.as_json)%>
+<% else %>
 <%= JSON.pretty_generate(@resource.entities.as_json)%>
+<% end %>
 </pre>
 
+<% if @entity && @entity.resources %>
+  <% @entity.resources.each do |r| %>
+     <li></li>
+  <% end %>
+<% else %>
+  <% @resource.entities.each do |e| %>
+    <li><a href='<%= @url %>/<%= @project.sha %>/<%= @resource.title %>/<%= e.id %>'><%= @url %>/<%= @project.sha %>/<%= @resource.title %>/<%= e.id %></a></li>
+  <% end %>
+<% end %>
 <pre>
+<% if @entity %>
+$ curl <%= @url %>/<%= @project.sha %>/<%= @resource.title %>/<%= @entity.id %>.json
+<% else %>
 $ curl <%= @url %>/<%= @project.sha %>/<%= @resource.title %>.json
+<% end %>
 </pre>

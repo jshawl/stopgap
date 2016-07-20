@@ -1,5 +1,6 @@
 class Entity < ActiveRecord::Base
   belongs_to :resource
+  has_many :resources
   def as_json(options={})
     attrs = {}
     self.content.each do |k, v|

@@ -11,7 +11,8 @@ CREATE TABLE projects (
 CREATE TABLE resources (
   id SERIAL PRIMARY KEY,
   title VARCHAR(255),
-  project_id INTEGER
+  project_id INTEGER,
+  entity_id INTEGER
 );
 
 CREATE TABLE entities (
