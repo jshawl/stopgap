@@ -1,10 +1,18 @@
+drop table if exists calls;
 drop table if exists projects;
 drop table if exists resources;
 drop table if exists entities;
 
+CREATE TABLE calls (
+  id SERIAL PRIMARY KEY,
+  method VARCHAR(255),
+  ts TIMESTAMP DEFAULT NOW()
+);
+
 CREATE TABLE projects (
   id SERIAL PRIMARY KEY,
   name VARCHAR(255),
+  ts TIMESTAMP DEFAULT NOW(),
   sha VARCHAR(10)
 );
 

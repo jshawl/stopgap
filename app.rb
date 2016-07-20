@@ -4,6 +4,7 @@ require_relative 'config/db'
 require_relative 'models/project'
 require_relative 'models/resource'
 require_relative 'models/entity'
+require_relative 'models/call'
 require 'pry'
 set :show_exceptions, false
 
@@ -36,7 +37,15 @@ helpers do
 end
 
 get '/' do
+  @calls = Call.all.count
   erb :index
+end
+
+get '/:project_id/:resource/:entity_id.json' do
+  @project = Project.find_by(sha:params[:project_id])
+  @resource = @project.resources.find_by(title: params[:resource])
+  @entity = @resource.entities.find(params[:entity_id])
+  @entity.to_json
 end
 
 get '/:project_id/:resource/:entity_id' do
@@ -52,6 +61,7 @@ delete '/:project_id/:resource/:entity_id' do
   @resource = @project.resources.find_by(title: params[:resource])
   @entity = @resource.entities.find(params[:entity_id])
   @entity.destroy
+  Call.create(method: method)
   nil
 end
 patch '/:project_id/:resource/:entity_id.json' do
@@ -59,18 +69,21 @@ patch '/:project_id/:resource/:entity_id.json' do
   @resource = @project.resources.find_by(title: params[:resource])
   @entity = @resource.entities.find(params[:entity_id])
   @entity.update(content: params.except!("splat","captures","project_id","resource","entity_id"))
+  Call.create(method: method)
   @entity.to_json
 end
 
 get '/:project_id/:resource.json' do
   @project = Project.find_by(sha:params[:project_id])
   @resource = @project.resources.find_by(title: params[:resource])
+  Call.create(method: method)
   @resource.entities.to_json
 end
 
 post '/:project_id/:resource.json' do
   @project = Project.find_by(sha:params[:project_id])
   @resource = @project.resources.find_by(title: params[:resource])
+  Call.create(method: method)
   e = @resource.entities.create(content: params.except!("splat","captures","project_id","resource"))
   e.to_json
 end
@@ -87,7 +100,17 @@ get '/:project_id' do
   erb :'projects/show'
 end
 
+post '/:project_id' do
+  @project = Project.find_by(sha:params[:project_id])
+  r = @project.resources.create(title: params[:title])
+  Call.create(method: method)
+  r.to_json
+end
+
+
+
 post '/' do
   p = Project.create
+  Call.create(method: method)
   redirect p.sha
 end

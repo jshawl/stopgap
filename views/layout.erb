@@ -13,9 +13,19 @@
     font-family: Monaco, monospace;
     background: #eee;
   }
+  header h1{
+    margin-bottom:0;
+  }
+  header{
+    margin-bottom:1em;
+  }
 </style>
 </head>
 <body>
+<header>
+<h1><a href='/'>Stopgap</a></h1>
+<small><em>An ephemeral API for testing API calls</em></small>
+</header>
 <%= yield %>
 </body>
 </html>
