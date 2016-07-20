@@ -1,13 +1,30 @@
-<h2>GET /<%= @resource.title %><% if @entity %>/<%= @entity.id %><% end %></h2>
+<h2><%= method %> / <%= link path %></h2>
 
-<pre><code class='json'><% if @entity %><%= JSON.pretty_generate(@entity.as_json)%>
+<% if @entity %>
+  <a href='<%= url %>?method=patch'>Update</a>
+  <a href='<%= url %>?method=delete'>Delete</a>
 <% else %>
-<%= JSON.pretty_generate(@resource.entities.as_json)%>
+  <a href='<%= url %>?method=post'>Create</a>
 <% end %>
-</code></pre>
 
+
+<% if params[:method] == 'post' %>
+<pre><code class='bash'>$ curl -X POST -d "key=value" <%= url %>.json
+</code></pre>
+<% elsif params[:method] == 'delete' %>
+<pre><code class='bash'>$ curl -X DELETE <%= url %>.json
+</code></pre>
+<% elsif params[:method] == 'patch' %>
+<pre><code class='json'><%= JSON.pretty_generate(@data.as_json)%>
+</code></pre>
+<pre><code class='bash'>$ curl -X PATCH -d "key=new-value" <%= url %>.json
+</code></pre>
+<% else %>
+<pre><code class='json'><%= JSON.pretty_generate(@data.as_json)%>
+</code></pre>
 <pre><code class='bash'>$ curl <%= url %>.json
 </code></pre>
+<% end %>
 
 <% if @entity && @entity.resources %>
   <% @entity.resources.each do |r| %>
