@@ -9,6 +9,12 @@ before do
   @url = 'http://localhost:4567'
 end
 
+helpers do
+  def url
+    request.url
+  end
+end
+
 get '/' do
   erb :index
 end
