@@ -5,8 +5,7 @@ drop table if exists entities;
 CREATE TABLE projects (
   id SERIAL PRIMARY KEY,
   name VARCHAR(255),
-  nationality VARCHAR(255),
-  birth_year INTEGER
+  sha VARCHAR(10)
 );
 
 CREATE TABLE resources (

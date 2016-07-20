@@ -1,0 +1,9 @@
+<h2>GET /<%= @resource.title %></h2>
+
+<pre>
+<%= JSON.pretty_generate(@resource.entities.as_json)%>
+</pre>
+
+<pre>
+$ curl <%= @url %>/<%= @project.sha %>/<%= @resource.title %>.json
+</pre>

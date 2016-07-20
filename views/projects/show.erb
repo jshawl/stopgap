@@ -1,0 +1,3 @@
+<% @project.resources.each do |resource| %>
+  <li><a href='/<%= @project.sha %>/<%= resource.title %>'><%= resource.title %></a></li>
+<% end %>
