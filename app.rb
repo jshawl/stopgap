@@ -21,7 +21,8 @@ end
 
 helpers do
   def url
-    "https://#{request.env['HTTP_HOST']}#{request.path}".gsub(/\?(.*)/,'')
+    protocol = request.env['HTTP_HOST'] == "localhost:4567" ? 'http' : 'https'
+    "#{protocol}://#{request.env['HTTP_HOST']}#{request.path}".gsub(/\?(.*)/,'')
   end
   def path
     request.path[1..-1]

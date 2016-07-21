@@ -1,10 +1,10 @@
 <h2 class='request'><%= method %> / <%= link path %></h2>
 
 <% if @entity %>
-  <a href='<%= url %>?method=patch'>Update</a>
-  <a href='<%= url %>?method=delete'>Delete</a>
+  <a class='btn blue' href='<%= url %>?method=patch'>Update</a>
+  <a class='btn red' href='<%= url %>?method=delete'>Delete</a>
 <% else %>
-  <a href='<%= url %>?method=post'>Create</a>
+  <a class='btn blue' href='<%= url %>?method=post'>Create</a>
 <% end %>
 
 
