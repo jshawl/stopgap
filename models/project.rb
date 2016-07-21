@@ -1,6 +1,6 @@
 require_relative '../resources'
 class Project < ActiveRecord::Base
-  has_many :resources
+  has_many :resources, dependent: :destroy
   before_create :set_hash
   after_create :seed_resources
 
