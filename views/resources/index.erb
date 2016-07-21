@@ -1,4 +1,4 @@
-<h2 class='request'><%= method %> / <%= link path %></h2>
+<h2 class='request'><%= method %> /<%= link path %></h2>
 
 <% if @entity %>
   <a class='btn blue' href='<%= url %>?method=patch'>Update</a>
@@ -25,8 +25,7 @@ request.send('key=value');
 <pre><code class='bash'>curl -X PATCH -d "key=new-value" <%= url %>.json
 </code></pre>
 <% else %>
-<pre><code class='json'><%= JSON.pretty_generate(@data.as_json)%>
-</code></pre>
+<h3>Request</h3>
 <pre><code class='bash'>curl <%= url %>.json
 </code></pre>
 <pre><code class='javascript'>var request = new XMLHttpRequest();
@@ -39,6 +38,9 @@ request.onload = function() {
 };
 request.send();
 </code></pre>
+<h3>Response</h3>
+<pre><code class='json'><%= JSON.pretty_generate(@data.as_json)%>
+</code></pre>
 
 <% end %>
 
@@ -46,7 +48,8 @@ request.send();
   <% @entity.resources.each do |r| %>
      <li></li>
   <% end %>
-<% else %>
+<% elsif !@resource.entities.empty? %>
+<h3>Get an individual <%= @resource.title.gsub(/s$/,'') %>:</h3>
   <% @resource.entities.each do |e| %>
     <li><a href='<%= url %>/<%= e.id %>'><%= url %>/<%= e.id %></a></li>
   <% end %>
