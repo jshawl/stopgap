@@ -8,6 +8,7 @@
 <% end %>
 
 
+<h3>Request</h3>
 <% if params[:method] == 'post' %>
 <pre><code class='bash'>curl -X POST -d "key=value" <%= url %>.json
 </code></pre>
@@ -19,13 +20,27 @@ request.send('key=value');
 <% elsif params[:method] == 'delete' %>
 <pre><code class='bash'>curl -X DELETE <%= url %>.json
 </code></pre>
-<% elsif params[:method] == 'patch' %>
-<pre><code class='json'><%= JSON.pretty_generate(@data.as_json)%>
+<pre><code class='javascript'>var request = new XMLHttpRequest();
+request.open('DELETE', '<%= url %>.json', true);
+request.onload = function() {
+  if (request.status >= 200 && request.status < 400) {
+    console.log(request.reponseText);
+  }
+};
+request.send();
 </code></pre>
+<% elsif params[:method] == 'patch' %>
 <pre><code class='bash'>curl -X PATCH -d "key=new-value" <%= url %>.json
 </code></pre>
+<pre><code>var request = new XMLHttpRequest();
+request.open('PATCH', '<%= url %>.json', true);
+request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+request.send('key=value');
+</code></pre>
+<h3>Response</h3>
+<pre><code class='json'><%= JSON.pretty_generate(@data.as_json)%>
+</code></pre>
 <% else %>
-<h3>Request</h3>
 <pre><code class='bash'>curl <%= url %>.json
 </code></pre>
 <pre><code class='javascript'>var request = new XMLHttpRequest();

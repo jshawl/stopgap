@@ -73,6 +73,7 @@ patch '/:project_id/:resource/:entity_id.json' do
   @project = Project.find_by(sha:params[:project_id])
   @resource = @project.resources.find_by(title: params[:resource])
   @entity = @resource.entities.find(params[:entity_id])
+  p params
   @entity.update(content: params.except!("splat","captures","project_id","resource","entity_id"))
   Call.create(method: method)
   @entity.to_json
