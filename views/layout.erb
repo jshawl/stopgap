@@ -2,28 +2,53 @@
 <html>
 <head>
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.5.0/styles/default.min.css">
+<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic|Inconsolata' rel='stylesheet' type='text/css'>
 <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.5.0/highlight.min.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
 <style>
   body{
-    font-family: 'Helvetica Neue', Helvetica, sans-serif;
+    font-family: 'Open Sans'; sans-serif;
+    color:#222;
   }
   code.hljs{
-    border-radius:3px;
-    font-family: Monaco, monospace;
-    background: #eee;
+    border-radius:5px;
+    font-family: Inconsolata, Monaco, monospace;
+    border:2px solid #eee;
   }
   header h1{
-    margin-bottom:0;
+    margin:0;
+  }
+  header h1 a{
+    text-decoration:none; 
+    color:inherit;
   }
   header{
     margin-bottom:1em;
   }
+  .request a{
+    text-decoration:none;
+    color:inherit;
+  }
+  .request a:hover{
+    text-decoration:underline;
+  }
+  .bash:before{
+    content: '$ '
+  }
+  button.red{
+    background: #E20000;
+    border:none;
+    font:inherit;
+    color: #fff;
+    cursor: pointer;
+    border-radius:3px;
+  }
 </style>
+<link href='/tomorrow.css' rel='stylesheet' type='text/css'>
 </head>
 <body>
 <header>
-<h1><a href='/'>Stopgap</a></h1>
+<h1><a href='/<%= @project.sha if @project %>'>Stopgap</a></h1>
 <small><em>An ephemeral API for testing API calls</em></small>
 </header>
 <%= yield %>

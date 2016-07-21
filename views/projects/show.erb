@@ -1,11 +1,18 @@
 Project expires <span class='moment'><%= (@project.ts + 86400) %></span>
 <br>
 <br>
+<form action="<%= url %>" method="post">
+    <input name="_method" type="hidden" value="delete" />
+    <button class='red'>Delete Project</button>
+</form>
+<h3>Resources:</h3>
+<ul>
 <% @project.resources.each do |resource| %>
-  <li><a href='/<%= @project.sha %>/<%= resource.title %>'><%= resource.title %></a></li>
+  <li><a href='/<%= @project.sha %>/<%= resource.title %>'><%= url %>/<%= resource.title %></a></li>
 <% end %>
+</ul>
 <h3>Or Create a new Resource:</h3>
-<pre><code class='bash'>$ curl -X POST -d "title=my-new-resource" <%= url %>
+<pre><code class='bash'>curl -X POST -d "title=my-new-resource" <%= url %>
 </code></pre>
 <script src='/moment.min.js'></script>
 <script>

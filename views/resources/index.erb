@@ -1,4 +1,4 @@
-<h2><%= method %> / <%= link path %></h2>
+<h2 class='request'><%= method %> / <%= link path %></h2>
 
 <% if @entity %>
   <a href='<%= url %>?method=patch'>Update</a>
@@ -9,20 +9,20 @@
 
 
 <% if params[:method] == 'post' %>
-<pre><code class='bash'>$ curl -X POST -d "key=value" <%= url %>.json
+<pre><code class='bash'>curl -X POST -d "key=value" <%= url %>.json
 </code></pre>
 <% elsif params[:method] == 'delete' %>
-<pre><code class='bash'>$ curl -X DELETE <%= url %>.json
+<pre><code class='bash'>curl -X DELETE <%= url %>.json
 </code></pre>
 <% elsif params[:method] == 'patch' %>
 <pre><code class='json'><%= JSON.pretty_generate(@data.as_json)%>
 </code></pre>
-<pre><code class='bash'>$ curl -X PATCH -d "key=new-value" <%= url %>.json
+<pre><code class='bash'>curl -X PATCH -d "key=new-value" <%= url %>.json
 </code></pre>
 <% else %>
 <pre><code class='json'><%= JSON.pretty_generate(@data.as_json)%>
 </code></pre>
-<pre><code class='bash'>$ curl <%= url %>.json
+<pre><code class='bash'>curl <%= url %>.json
 </code></pre>
 <pre><code class='javascript'>var request = new XMLHttpRequest();
 request.open('GET', '<%= url %>.json', true);

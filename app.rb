@@ -111,6 +111,13 @@ post '/:project_id' do
   r.to_json
 end
 
+delete '/:project_id' do
+  @project = Project.find_by(sha:params[:project_id])
+  @project.destroy
+  Call.create(method: method)
+  redirect "/"
+end
+
 
 
 post '/' do
