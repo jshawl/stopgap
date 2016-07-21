@@ -1,5 +1,18 @@
 <form method='post' action='/'>
-  <button>Create Project</button>
+  <button class='btn blue'>Create Project</button>
 </form>
 <br>
 <%= @calls %> api calls and counting!
+
+<h2>An API for creating APIs</h2>
+<p>Wait, what?! That's right. Create whatever resources you need.</p>
+<p>Need Kittens?
+<pre><code class='bash'>curl -X POST -d "title=kittens"
+</code></pre>
+</p>
+<p>Need Puppies?
+<pre><code class='bash'>curl -X POST -d "title=puppies"
+</code></pre>
+</p>
+
+<h2>API expires 24 hours after creation</h2>
