@@ -21,7 +21,7 @@ end
 
 helpers do
   def url
-    request.url.gsub(/\?(.*)/,'')
+    "#{request.env['rack.url_scheme']}://#{request.env['HTTP_HOST']}".gsub(/\?(.*)/,'')
   end
   def path
     request.path[1..-1]
