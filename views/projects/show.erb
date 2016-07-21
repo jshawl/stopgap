@@ -7,7 +7,7 @@ Project expires <span class='moment'><%= (@project.ts + 86400) %></span>
 <h3>Or Create a new Resource:</h3>
 <pre><code class='bash'>$ curl -X POST -d "title=my-new-resource" <%= url %>
 </code></pre>
-<script src='http://momentjs.com/downloads/moment.js'></script>
+<script src='/moment.min.js'></script>
 <script>
   var m = document.querySelector(".moment")
   m.innerHTML = moment(m.innerHTML).fromNow()
