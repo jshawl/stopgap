@@ -11,6 +11,11 @@
 <% if params[:method] == 'post' %>
 <pre><code class='bash'>curl -X POST -d "key=value" <%= url %>.json
 </code></pre>
+<pre><code>var request = new XMLHttpRequest();
+request.open('POST', '<%= url %>.json', true);
+request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+request.send('key=value');
+</code></pre>
 <% elsif params[:method] == 'delete' %>
 <pre><code class='bash'>curl -X DELETE <%= url %>.json
 </code></pre>
