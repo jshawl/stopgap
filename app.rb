@@ -10,9 +10,13 @@ set :show_exceptions, false
 
 before do
   @url = 'http://localhost:4567'
+  response["Access-Control-Allow-Origin"] = "*"
 end
 error do
   {error:request.env['sinatra.error']}.to_json
+end
+options '/*' do
+  response["Access-Control-Allow-Headers"] = "origin, x-requested-with, content-type"
 end
 
 helpers do
