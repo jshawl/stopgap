@@ -22,5 +22,5 @@ request.send('title=kittens');
 <script src='/moment.min.js'></script>
 <script>
   var m = document.querySelector(".moment")
-  m.innerHTML = moment(m.innerHTML).fromNow()
+  m.innerHTML = moment.utc(m.innerHTML).fromNow()
 </script>
