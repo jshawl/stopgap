@@ -16,7 +16,7 @@ before do
   response["Access-Control-Allow-Origin"] = "*"
   response["Access-Control-Allow-Methods"] = "GET, POST, PUT, PATCH, DELETE, OPTIONS"
   body = request.body.read
-  @json = body.empty? ? {} : JSON.parse(body.to_s)
+  @json = body.empty? || body.match("_method") ? {} : JSON.parse(body.to_s)
 end
 
 error do
