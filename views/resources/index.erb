@@ -14,8 +14,8 @@
 </code></pre>
 <pre><code>var request = new XMLHttpRequest();
 request.open('POST', '<%= url %>.json', true);
-request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
-request.send('key=value');
+request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+request.send('{"key":"value"}');
 </code></pre>
 <% elsif params[:method] == 'delete' %>
 <pre><code class='bash'>curl -X DELETE <%= url %>.json
@@ -34,8 +34,8 @@ request.send();
 </code></pre>
 <pre><code>var request = new XMLHttpRequest();
 request.open('PATCH', '<%= url %>.json', true);
-request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
-request.send('key=value');
+request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+request.send('{"key":"new value"}');
 </code></pre>
 <h3>Response</h3>
 <pre><code class='json'><%= JSON.pretty_generate(@data.as_json)%>

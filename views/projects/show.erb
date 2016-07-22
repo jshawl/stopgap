@@ -16,8 +16,8 @@ Project expires <span class='moment'><%= (@project.ts + 86400) %></span>
 </code></pre>
 <pre><code>var request = new XMLHttpRequest();
 request.open('POST', '<%= url %>', true);
-request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
-request.send('title=kittens');
+request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+request.send('{"title":"kittens"}');
 </code></pre>
 <script src='/moment.min.js'></script>
 <script>
