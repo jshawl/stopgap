@@ -1,49 +1,71 @@
-<h2 class='request'><%= method %> /<%= link path %></h2>
+<h2 class='request'><span><%= method %></span> /<%= link path %></h2>
 
+<div>
 <% if @entity %>
-  <a class='btn blue' href='<%= url %>?method=patch'>Update</a>
-  <a class='btn red' href='<%= url %>?method=delete'>Delete</a>
+<a class='btn green' href='<%= url %>/../../users'>List <%= @resource.title %></a>
+<a class='btn green' href='<%= url %>/../../users?method=post'>+ Create a <%= singularize(@resource.title) %></a>
+<a class='btn blue' href='<%= url %>?method=patch'>/ Update <%= singularize(@resource.title) %></a>
+<a class='btn red' href='<%= url %>?method=delete'>&times; Delete <%= singularize(@resource.title) %></a>
 <% else %>
-  <a class='btn blue' href='<%= url %>?method=post'>Create</a>
+<a class='btn green' href='<%= url %>/../users'>List <%= @resource.title %></a>
+<a class='btn green' href='<%= url %>?method=post'>+ Create a <%= singularize(@resource.title) %></a>
 <% end %>
 
-
+</div>
+<div class='left'>
 <h3>Request</h3>
+
 <% if params[:method] == 'post' %>
-<pre><code class='bash'>curl -X POST -d "key=value" <%= url %>.json
-</code></pre>
-<pre><code>var request = new XMLHttpRequest();
+
+<pre><code contenteditable class='bash'>curl -X POST -d "key=value" <%= url %>.json</code></pre>
+
+<pre><code contenteditable>var request = new XMLHttpRequest();
 request.open('POST', '<%= url %>.json', true);
 request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
-request.send('{"key":"value"}');
-</code></pre>
+request.send('{"key":"value"}');</code></pre>
+</div>
+<div class='right'>
+<h3>Response</h3>
+<pre><code class='json'><%= JSON.pretty_generate(@data.as_json)%></code></pre>
+</div>
+
 <% elsif params[:method] == 'delete' %>
-<pre><code class='bash'>curl -X DELETE <%= url %>.json
-</code></pre>
-<pre><code class='javascript'>var request = new XMLHttpRequest();
+
+<pre><code contenteditable class='bash'>curl -X DELETE <%= url %>.json</code></pre>
+
+<pre><code contenteditable class='javascript'>var request = new XMLHttpRequest();
 request.open('DELETE', '<%= url %>.json', true);
 request.onload = function() {
   if (request.status >= 200 && request.status < 400) {
     console.log(request.reponseText);
   }
 };
-request.send();
-</code></pre>
+request.send();</code></pre>
+</div>
+<div class='right'>
+<h3>Response</h3>
+<pre><code class='json'></code></pre>
+
+</div>
 <% elsif params[:method] == 'patch' %>
-<pre><code class='bash'>curl -X PATCH -d "key=new-value" <%= url %>.json
-</code></pre>
-<pre><code>var request = new XMLHttpRequest();
+
+<pre><code contenteditable class='bash'>curl -X PATCH -d "key=new-value" <%= url %>.json</code></pre>
+<pre><code contenteditable>var request = new XMLHttpRequest();
 request.open('PATCH', '<%= url %>.json', true);
 request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
-request.send('{"key":"new value"}');
-</code></pre>
+request.send('{"key":"new value"}'); </code></pre>
+
+</div>
+<div class='right'>
 <h3>Response</h3>
-<pre><code class='json'><%= JSON.pretty_generate(@data.as_json)%>
-</code></pre>
+<pre><code class='json'><%= JSON.pretty_generate(@data.as_json)%></code></pre>
+</div>
+
 <% else %>
-<pre><code class='bash'>curl <%= url %>.json
+
+<pre><code contenteditable class='bash'>curl <%= url %>.json
 </code></pre>
-<pre><code class='javascript'>var request = new XMLHttpRequest();
+<pre><code contenteditable class='javascript'>var request = new XMLHttpRequest();
 request.open('GET', '<%= url %>.json', true);
 request.onload = function() {
   if (request.status >= 200 && request.status < 400) {
@@ -51,21 +73,24 @@ request.onload = function() {
     console.log(data);
   }
 };
-request.send();
-</code></pre>
+request.send();</code></pre>
+</div><!-- .request -->
+<div class='right'>
 <h3>Response</h3>
 <pre><code class='json'><%= JSON.pretty_generate(@data.as_json)%>
 </code></pre>
-
+</div><!-- right -->
 <% end %>
 
+<div class='cb'>
 <% if @entity && @entity.resources %>
   <% @entity.resources.each do |r| %>
      <li></li>
   <% end %>
 <% elsif !@resource.entities.empty? %>
-<h3>Get an individual <%= @resource.title.gsub(/s$/,'') %>:</h3>
+<h3>Get an individual <%= singularize @resource.title %>:</h3>
   <% @resource.entities.each do |e| %>
     <li><a href='<%= url %>/<%= e.id %>'><%= url %>/<%= e.id %></a></li>
   <% end %>
 <% end %>
+</div>

@@ -99,7 +99,7 @@ end
 def resource_show
   @project = Project.find_by(sha:params[:project_id])
   @resource = @project.resources.find_or_create_by(title: params[:resource])
-  @data = @resource.entities
+  @data = params[:method] == "post" ?  @resource.entities.last : @resource.entities
   if json?
     @data.to_json
   else

@@ -10,6 +10,9 @@ helpers do
     m = params[:method] || 'GET'
     m.upcase
   end
+  def singularize str
+    str.gsub(/s$/,'')
+  end
   def link path
     paths = path.split("/")
     psofar = ''

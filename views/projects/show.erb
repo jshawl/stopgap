@@ -12,9 +12,9 @@ Project expires <span class='moment'><%= (@project.ts + 86400) %></span>
 <% end %>
 </ul>
 <h3>Or Create a new Resource:</h3>
-<pre><code class='bash'>curl -X POST -d "title=my-new-resource" <%= url %>
+<pre><code class='bash' contenteditable>curl -X POST -d "title=my-new-resource" <%= url %>
 </code></pre>
-<pre><code>var request = new XMLHttpRequest();
+<pre><code contenteditable>var request = new XMLHttpRequest();
 request.open('POST', '<%= url %>', true);
 request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
 request.send('{"title":"kittens"}');
