@@ -39,19 +39,8 @@ get '/' do
   erb :index
 end
 
-get '/:project_id/:resource/:entity_id.json' do
-  @project = Project.find_by(sha:params[:project_id])
-  @resource = @project.resources.find_by(title: params[:resource])
-  @entity = @resource.entities.find(params[:entity_id])
-  @entity.to_json
-end
-
 get '/:project_id/:resource/:entity_id' do
-  @project = Project.find_by(sha:params[:project_id])
-  @resource = @project.resources.find_by(title: params[:resource])
-  @entity = @resource.entities.find(params[:entity_id])
-  @data = @entity
-  erb :'resources/index'
+  entity_show
 end
 
 delete '/:project_id/:resource/:entity_id' do
@@ -86,6 +75,24 @@ post '/:project_id/:resource.json' do
   e.to_json
 end
 
+
+def entity_show
+  begin
+    @project = Project.find_by(sha:params[:project_id])
+    @resource = @project.resources.find_by(title: params[:resource])
+    @entity = @resource.entities.find(params[:entity_id])
+    @data = @entity
+    erb :'resources/index'
+  rescue
+    status 404
+    if json?
+      {error: "Not found."}.to_json
+    else
+      erb :'resources/404'
+    end
+  end
+end
+
 get '/:project_id/:resource' do; resource_show; end
 post '/:project_id' do; resource_create; end
 
@@ -100,7 +107,6 @@ end
 def resource_show
   @project = Project.find_by(sha:params[:project_id])
   @resource = @project.resources.find_or_create_by(title: params[:resource])
-
   @data = params[:method] == "post" ?  (@resource.entities.last || {}) : @resource.entities
   if json?
     @data.to_json
