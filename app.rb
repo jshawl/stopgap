@@ -35,7 +35,11 @@ def json?
 end
 
 get '/' do
-  @calls = Call.all.count
+  @calls = Call.all.count.to_s.split("").reverse.each_with_index.map{|d, i|
+    o = d 
+    o += "," if i % 3 === 0 && i != 0
+    o
+  }.reverse.join("")
   erb :index
 end
 
