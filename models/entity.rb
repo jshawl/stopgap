@@ -1,6 +1,9 @@
 class Entity < ActiveRecord::Base
   belongs_to :resource
   has_many :resources
+  def self.default_scope
+    order('id ASC')
+  end
   def as_json(options={})
     attrs = {url: "https://stopgap.store/#{self.resource.project.sha}/#{self.resource.title}/#{self.id}"}
     self.content.each do |k, v|
