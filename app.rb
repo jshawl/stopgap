@@ -100,7 +100,8 @@ end
 def resource_show
   @project = Project.find_by(sha:params[:project_id])
   @resource = @project.resources.find_or_create_by(title: params[:resource])
-  @data = params[:method] == "post" ?  @resource.entities.last : @resource.entities
+
+  @data = params[:method] == "post" ?  (@resource.entities.last || {}) : @resource.entities
   if json?
     @data.to_json
   else
@@ -127,17 +128,22 @@ end
 def project_show
   id = params[:project_id].gsub(/\.json/,'')
   @project = Project.find_by(sha:id)
-  if json?
-    @project.resources.to_json
+  if @project
+    if json?
+      @project.resources.to_json
+    else
+      erb :'projects/show'
+    end
   else
-    erb :'projects/show'
+    status 404
+    erb :'projects/404'
   end
 end
 
 def project_delete
   id = params[:project_id].gsub(/\.json/,'')
-  @project = Project.find_by(sha:id)
-  @project.destroy
+  @project = Project.where(sha:id)
+  @project.destroy_all
   Call.create(method: method)
   if json?
     nil

@@ -1,11 +1,13 @@
 require 'HTTParty'
 require 'pry'
+require_relative '../config/db'
+require_relative '../models/project'
 
 base = 'http://localhost:4567/'
 url = base + '00868'
 
 describe "project" do
-  before :all do
+  before :each do
     res = HTTParty.post(base, headers: {
       "Content-Type": 'application/json'
     })
@@ -49,6 +51,19 @@ describe "project" do
 	'Content-Type': 'application/json'
       }, follow_redirects: false)
       expect(res.body).to eq("")
+    end
+    it "actually deletes" do
+      res = HTTParty.delete(@url, follow_redirects: false)
+      sha = @url.split("/")[-1]
+      pr = Project.find_by(sha: sha)
+      expect(pr).to eq(nil)
+    end
+    it "responds with 404 status code" do
+      r = HTTParty.delete(@url, headers: {
+	'Content-Type': 'application/json'
+      }, follow_redirects: false)
+      res = HTTParty.get(@url, follow_redirects: false)
+      expect(res.code).to eq(404)
     end
   end
 end

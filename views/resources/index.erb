@@ -2,12 +2,12 @@
 
 <div>
 <% if @entity %>
-<a class='btn green' href='<%= url %>/../../users'>List <%= @resource.title %></a>
-<a class='btn green' href='<%= url %>/../../users?method=post'>+ Create a <%= singularize(@resource.title) %></a>
+<a class='btn green' href='<%= url %>/../../<%= @resource.title %>'>List <%= @resource.title %></a>
+<a class='btn green' href='<%= url %>/../../<%= @resource.title %>?method=post'>+ Create a <%= singularize(@resource.title) %></a>
 <a class='btn blue' href='<%= url %>?method=patch'>/ Update <%= singularize(@resource.title) %></a>
 <a class='btn red' href='<%= url %>?method=delete'>&times; Delete <%= singularize(@resource.title) %></a>
 <% else %>
-<a class='btn green' href='<%= url %>/../users'>List <%= @resource.title %></a>
+<a class='btn green' href='<%= url %>/../<%= @resource.title %>'>List <%= @resource.title %></a>
 <a class='btn green' href='<%= url %>?method=post'>+ Create a <%= singularize(@resource.title) %></a>
 <% end %>
 
