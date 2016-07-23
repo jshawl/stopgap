@@ -8,6 +8,7 @@ require_relative 'models/project'
 require_relative 'models/resource'
 require_relative 'models/entity'
 require_relative 'models/call'
+require_relative 'helpers'
 use Rack::PostBodyContentTypeParser
 set :show_exceptions, false
 
@@ -18,34 +19,11 @@ before do
   body = request.body.read
   @json = body.empty? || body.match("_method") ? {} : JSON.parse(body.to_s)
 end
-
 error do
   {error:request.env['sinatra.error']}.to_json
 end
 options '/*' do
   response["Access-Control-Allow-Headers"] = "origin, x-requested-with, content-type"
-end
-
-helpers do
-  def url
-    protocol = request.env['HTTP_HOST'] == "localhost:4567" ? 'http' : 'https'
-    "#{protocol}://#{request.env['HTTP_HOST']}#{request.path}".gsub(/\?(.*)/,'')
-  end
-  def path
-    request.path[1..-1]
-  end
-  def method
-    m = params[:method] || 'GET'
-    m.upcase
-  end
-  def link path
-    paths = path.split("/")
-    psofar = ''
-    paths.map{|p|
-      psofar += "/" + p
-      "<a href='#{psofar}'>#{p}</a>"
-    }.join("/")
-  end
 end
 
 get '/' do
@@ -104,12 +82,11 @@ get '/:project_id/:resource' do
   @project = Project.find_by(sha:params[:project_id])
   @resource = @project.resources.find_by(title: params[:resource])
   @data = @resource.entities
-  erb :'resources/index'
-end
-
-get '/:project_id' do
-  @project = Project.find_by(sha:params[:project_id])
-  erb :'projects/show'
+  if request.headers["Content-type"] == "application/json"
+    @data.to_json
+  else
+    erb :'resources/index'
+  end
 end
 
 post '/:project_id' do
@@ -119,15 +96,48 @@ post '/:project_id' do
   r.to_json
 end
 
-delete '/:project_id' do
-  @project = Project.find_by(sha:params[:project_id])
-  @project.destroy
-  Call.create(method: method)
-  redirect "/"
-end
+post '/' do; project_create; end
 
-post '/' do
+get '/:project_id' do; project_show; end
+get '/:project_id.json' do; project_show; end
+
+delete '/:project_id' do; project_delete; end
+delete '/:project_id.json' do; project_delete; end
+
+def project_create
   p = Project.create
   Call.create(method: method)
-  redirect p.sha
+  if request.env["CONTENT_TYPE"].match "application/json"
+    response.headers['Content-Type'] = "application/json"
+    p.to_json
+  else
+    redirect p.sha
+  end
+end
+
+def json?
+  request.env["CONTENT_TYPE"] == "application/json" || request.env["REQUEST_PATH"].match(/\.json/)
+end
+
+def project_show
+  id = params[:project_id].gsub(/\.json/,'')
+  @project = Project.find_by(sha:id)
+  if json?
+    response.headers['Content-Type'] = "application/json"
+    @project.resources.to_json
+  else
+    erb :'projects/show'
+  end
+end
+
+def project_delete
+  id = params[:project_id].gsub(/\.json/,'')
+  @project = Project.find_by(sha:id)
+  @project.destroy
+  Call.create(method: method)
+  if request.env["CONTENT_TYPE"] == "application/json"
+    nil
+  else
+    redirect "/"
+  end
 end
