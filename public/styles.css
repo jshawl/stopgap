@@ -1,0 +1,63 @@
+.cb{
+  clear:both;
+}
+.left, .right{
+  float:left;
+  width:50%;
+}
+.right{
+  padding-left: 1em;
+  box-sizing:border-box;
+}
+body{
+  font-family: 'Open Sans'; sans-serif;
+  color:#222;
+}
+code.hljs{
+  border-radius:5px;
+  font-family: Inconsolata, Monaco, monospace;
+  border:2px solid #eee;
+}
+header h1{
+  margin:0;
+}
+header h1 a{
+  text-decoration:none; 
+  color:inherit;
+}
+header{
+  margin-bottom:1em;
+}
+.request, .request a{
+  color:#ccc;
+}
+.request span{
+  color:#222;
+}
+.request a{
+  text-decoration:none;
+}
+.request a:hover{
+  text-decoration:underline;
+}
+.bash:before{
+  content: '$ '
+}
+.btn{
+  border:none;
+  font:inherit;
+  color: #fff;
+  cursor: pointer;
+  border-radius:3px;
+  text-decoration:none;
+  padding:.25em;
+}
+.red{
+  background: #E20000;
+}
+.blue{
+  background:#4B8BF5; 
+}
+.green{
+  background:#00D861; 
+}
