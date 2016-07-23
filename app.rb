@@ -37,7 +37,7 @@ end
 
 get '/' do
   @calls = Call.all.count.to_s.split("").reverse.each_with_index.map{|d, i|
-    o = d 
+    o = d
     o += "," if i % 3 === 0 && i != 0
     o
   }.reverse.join("")
@@ -62,7 +62,7 @@ patch '/:project_id/:resource/:entity_id' do
   @project = Project.find_by(sha:params[:project_id])
   @resource = @project.resources.find_by(title: params[:resource])
   @entity = @resource.entities.find(params[:entity_id])
-  @entity.update(content: @json)
+  @entity.update(content: @entity.content.merge(@json))
   Call.create(method: method)
   @entity.to_json
 end
@@ -82,14 +82,17 @@ post '/:project_id/:resource.json' do
   e.to_json
 end
 
-
 def entity_show
   begin
     @project = Project.find_by(sha:params[:project_id])
     @resource = @project.resources.find_by(title: params[:resource])
     @entity = @resource.entities.find(params[:entity_id])
     @data = @entity
-    erb :'resources/index'
+    if params[:method]
+      erb :"resources/#{params[:method]}"
+    else
+      erb :'resources/index'
+    end
   rescue
     status 404
     if json?
@@ -118,7 +121,11 @@ def resource_show
   if json?
     @data.to_json
   else
-    erb :'resources/index'
+    if params[:method] == "post"
+      erb :"resources/post"
+    else
+      erb :'resources/index'
+    end
   end
 end
 

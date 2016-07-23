@@ -74,3 +74,14 @@ header{
     padding:0;
   }
 }
+pre{
+  max-width: 100%;
+}
+.request-options a{
+  color:inherit; 
+  border: 2px solid #222;
+  text-decoration:none;
+  border-radius: 5px;
+  padding:0 .5em;
+  display:inline-block;
+}

@@ -1,0 +1,23 @@
+<%= erb :'resources/header' %>
+<div class='left'>
+<h3>Request</h3>
+<pre class='filter-by curl'><code contenteditable class='bash'>curl -X POST -d '{"key":"value"}' <%= url %>.json</code></pre>
+
+<pre><code contenteditable>var request = new XMLHttpRequest();
+request.open('POST', '<%= url %>.json', true);
+request.send('{"key":"value"}');</code></pre>
+<pre><code contenteditable>fetch('<%= url %>.json',{
+  method: 'POST',
+  body: JSON.stringify({
+    key: 'value'
+  })
+}).then(function(response){
+  response.json().then(function(data){
+    console.log(data)
+  })
+})</code></pre>
+</div>
+<div class='right'>
+<h3>Response</h3>
+<pre><code class='json'><%= JSON.pretty_generate(@data.as_json)%></code></pre>
+</div>

@@ -1,71 +1,10 @@
-<h2 class='request'><span><%= method %></span> /<%= link path %></h2>
-
-<div class='nav'>
-<% if @entity %>
-<a class='btn green' href='<%= url %>/../../<%= @resource.title %>'>List <%= @resource.title %></a>
-<a class='btn green' href='<%= url %>/../../<%= @resource.title %>?method=post'>+ Create a <%= singularize(@resource.title) %></a>
-<a class='btn blue' href='<%= url %>?method=patch'>/ Update <%= singularize(@resource.title) %></a>
-<a class='btn red' href='<%= url %>?method=delete'>&times; Delete <%= singularize(@resource.title) %></a>
-<% else %>
-<a class='btn green' href='<%= url %>/../<%= @resource.title %>'>List <%= @resource.title %></a>
-<a class='btn green' href='<%= url %>?method=post'>+ Create a <%= singularize(@resource.title) %></a>
-<% end %>
-
-</div>
+<%= erb :'resources/header' %>
 <div class='left'>
 <h3>Request</h3>
-
-<% if params[:method] == 'post' %>
-
-<pre><code contenteditable class='bash'>curl -X POST -d "key=value" <%= url %>.json</code></pre>
-
-<pre><code contenteditable>var request = new XMLHttpRequest();
-request.open('POST', '<%= url %>.json', true);
-request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
-request.send('{"key":"value"}');</code></pre>
-</div>
-<div class='right'>
-<h3>Response</h3>
-<pre><code class='json'><%= JSON.pretty_generate(@data.as_json)%></code></pre>
-</div>
-
-<% elsif params[:method] == 'delete' %>
-
-<pre><code contenteditable class='bash'>curl -X DELETE <%= url %>.json</code></pre>
-
-<pre><code contenteditable class='javascript'>var request = new XMLHttpRequest();
-request.open('DELETE', '<%= url %>.json', true);
-request.onload = function() {
-  if (request.status >= 200 && request.status < 400) {
-    console.log(request.reponseText);
-  }
-};
-request.send();</code></pre>
-</div>
-<div class='right'>
-<h3>Response</h3>
-<pre><code class='json'></code></pre>
-
-</div>
-<% elsif params[:method] == 'patch' %>
-
-<pre><code contenteditable class='bash'>curl -X PATCH -d "key=new-value" <%= url %>.json</code></pre>
-<pre><code contenteditable>var request = new XMLHttpRequest();
-request.open('PATCH', '<%= url %>.json', true);
-request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
-request.send('{"key":"new value"}'); </code></pre>
-
-</div>
-<div class='right'>
-<h3>Response</h3>
-<pre><code class='json'><%= JSON.pretty_generate(@data.as_json)%></code></pre>
-</div>
-
-<% else %>
-
-<pre><code contenteditable class='bash'>curl <%= url %>.json
+<div class='js-filter'>
+<pre class='curl'><code contenteditable class='bash'>curl <%= url %>.json
 </code></pre>
-<pre><code contenteditable class='javascript'>var request = new XMLHttpRequest();
+<pre class='xhr'><code contenteditable class='javascript'>var request = new XMLHttpRequest();
 request.open('GET', '<%= url %>.json', true);
 request.onload = function() {
   if (request.status >= 200 && request.status < 400) {
@@ -74,13 +13,21 @@ request.onload = function() {
   }
 };
 request.send();</code></pre>
-</div><!-- .request -->
+<pre class='fetch'><code contenteditable class='javascript'>fetch('<%= url %>.json').then(function(response){
+  response.json().then(function(data){
+    console.log(data)
+  })
+})</code></pre>
+<pre class='jquery'><code contenteditable class='javascript'>$.getJSON('<%= url %>.json').then(function(response){
+    console.log(response)
+})</code></pre>
+</div>
+</div>
 <div class='right'>
 <h3>Response</h3>
 <pre><code class='json'><%= JSON.pretty_generate(@data.as_json)%>
 </code></pre>
 </div><!-- right -->
-<% end %>
 
 <div class='cb'>
 <% if @entity && @entity.resources %>
@@ -94,3 +41,19 @@ request.send();</code></pre>
   <% end %>
 <% end %>
 </div>
+<script>
+/*
+  var iso = new Isotope( '.js-filter', {
+    itemSelector: 'pre'
+  });
+  var klass = localStorage.getItem('iso-filter')
+  if(klass) iso.arrange({filter: '.' + klass })
+  var as = document.querySelectorAll('.request-options a')
+  for (var i = 0; i < as.length; i++){
+    as[i].addEventListener("click", function(e){
+      localStorage.setItem("iso-filter", e.target.className)
+      iso.arrange({filter: '.' + e.target.className })
+    })
+  }
+*/
+</script>

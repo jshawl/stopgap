@@ -1,0 +1,23 @@
+<h2 class='request'><span><%= method %></span> /<%= link path %></h2>
+
+<div class='nav'>
+<% if @entity %>
+<a class='btn green' href='<%= url %>/../../<%= @resource.title %>'>List <%= @resource.title %></a>
+<a class='btn green' href='<%= url %>/../../<%= @resource.title %>?method=post'>+ Create a <%= singularize(@resource.title) %></a>
+<a class='btn blue' href='<%= url %>?method=patch'>/ Update <%= singularize(@resource.title) %></a>
+<a class='btn red' href='<%= url %>?method=delete'>&times; Delete <%= singularize(@resource.title) %></a>
+<% else %>
+<a class='btn green' href='<%= url %>/../<%= @resource.title %>'>List <%= @resource.title %></a>
+<a class='btn green' href='<%= url %>?method=post'>+ Create a <%= singularize(@resource.title) %></a>
+<% end %>
+
+</div>
+<!--
+<script src='https://npmcdn.com/isotope-layout@3.0.1/dist/isotope.pkgd.min.js'></script>
+<div class='request-options'>
+  <a href='#' class='curl'>cURL</a>
+  <a href='#' class='xhr'>XHR</a>
+  <a href='#' class='fetch'>fetch</a>
+  <a href='#' class='jquery'>jQuery</a>
+</div>
+-->

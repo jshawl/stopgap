@@ -1,0 +1,13 @@
+<%= erb :'resources/header' %>
+<div class='left'>
+<h3>Request</h3>
+<pre><code contenteditable class='bash'>curl -X PATCH -d '{"key":"new-value"}' <%= url %>.json</code></pre>
+<pre><code contenteditable>var request = new XMLHttpRequest();
+request.open('PATCH', '<%= url %>.json', true);
+request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+request.send('{"key":"new value"}'); </code></pre>
+</div>
+<div class='right'>
+<h3>Response</h3>
+<pre><code class='json'><%= JSON.pretty_generate(@data.as_json)%></code></pre>
+</div>
