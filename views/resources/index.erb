@@ -1,6 +1,6 @@
 <h2 class='request'><span><%= method %></span> /<%= link path %></h2>
 
-<div>
+<div class='nav'>
 <% if @entity %>
 <a class='btn green' href='<%= url %>/../../<%= @resource.title %>'>List <%= @resource.title %></a>
 <a class='btn green' href='<%= url %>/../../<%= @resource.title %>?method=post'>+ Create a <%= singularize(@resource.title) %></a>

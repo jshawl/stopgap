@@ -56,8 +56,21 @@ header{
   background: #E20000;
 }
 .blue{
-  background:#4B8BF5; 
+  background:#4B8BF5;
 }
 .green{
-  background:#00D861; 
+  background:#00D861;
+}
+
+.nav a {
+  display:inline-block;
+  margin-bottom:.5em;
+}
+
+@media all and (max-width:40em){
+  .left, .right{
+    float:none;
+    width:100%;
+    padding:0;
+  }
 }
