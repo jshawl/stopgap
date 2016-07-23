@@ -17,6 +17,7 @@ GEM
     coderay (1.1.1)
     concurrent-ruby (1.0.2)
     diff-lcs (1.2.5)
+    git-version-bump (0.15.1)
     httparty (0.13.7)
       json (~> 1.8)
       multi_xml (>= 0.5.2)
@@ -32,6 +33,9 @@ GEM
       method_source (~> 0.8.1)
       slop (~> 3.4)
     rack (1.6.4)
+    rack-contrib (1.4.0)
+      git-version-bump (~> 0.15)
+      rack (~> 1.4)
     rack-protection (1.5.3)
       rack
     rack-test (0.6.3)
@@ -74,6 +78,7 @@ DEPENDENCIES
   httparty
   pg
   pry
+  rack-contrib
   rspec
   sinatra
   sinatra-contrib
