@@ -16,14 +16,21 @@ before do
   @url = 'http://localhost:4567'
   response["Access-Control-Allow-Origin"] = "*"
   response["Access-Control-Allow-Methods"] = "GET, POST, PUT, PATCH, DELETE, OPTIONS"
+  response.headers['Content-Type'] = "application/json" if json?
   body = request.body.read
   @json = body.empty? || body.match("_method") ? {} : JSON.parse(body.to_s)
 end
+
 error do
   {error:request.env['sinatra.error']}.to_json
 end
+
 options '/*' do
   response["Access-Control-Allow-Headers"] = "origin, x-requested-with, content-type"
+end
+
+def json?
+  request.env["CONTENT_TYPE"] == "application/json" || request.env["REQUEST_PATH"].match(/\.json/)
 end
 
 get '/' do
@@ -78,31 +85,31 @@ post '/:project_id/:resource.json' do
   e.to_json
 end
 
-get '/:project_id/:resource' do
+get '/:project_id/:resource' do; resource_show; end
+post '/:project_id' do; resource_create; end
+
+def resource_create
+  @project = Project.find_by(sha:params[:project_id])
+  response.headers['Content-Type'] = "application/json"
+  r = @project.resources.create(title: params[:title] || @json)
+  Call.create(method: method)
+  r.to_json
+end
+
+def resource_show
   @project = Project.find_by(sha:params[:project_id])
   @resource = @project.resources.find_by(title: params[:resource])
   @data = @resource.entities
-  if request.headers["Content-type"] == "application/json"
+  if json?
     @data.to_json
   else
     erb :'resources/index'
   end
 end
 
-post '/:project_id' do
-  @project = Project.find_by(sha:params[:project_id])
-  r = @project.resources.create(title: params[:title] || @json)
-  Call.create(method: method)
-  r.to_json
-end
-
 post '/' do; project_create; end
-
 get '/:project_id' do; project_show; end
-get '/:project_id.json' do; project_show; end
-
 delete '/:project_id' do; project_delete; end
-delete '/:project_id.json' do; project_delete; end
 
 def project_create
   p = Project.create
@@ -115,15 +122,11 @@ def project_create
   end
 end
 
-def json?
-  request.env["CONTENT_TYPE"] == "application/json" || request.env["REQUEST_PATH"].match(/\.json/)
-end
 
 def project_show
   id = params[:project_id].gsub(/\.json/,'')
   @project = Project.find_by(sha:id)
   if json?
-    response.headers['Content-Type'] = "application/json"
     @project.resources.to_json
   else
     erb :'projects/show'
@@ -135,7 +138,7 @@ def project_delete
   @project = Project.find_by(sha:id)
   @project.destroy
   Call.create(method: method)
-  if request.env["CONTENT_TYPE"] == "application/json"
+  if json?
     nil
   else
     redirect "/"
