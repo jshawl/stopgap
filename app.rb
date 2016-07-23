@@ -51,7 +51,7 @@ delete '/:project_id/:resource/:entity_id' do
   Call.create(method: method)
   nil
 end
-patch '/:project_id/:resource/:entity_id.json' do
+patch '/:project_id/:resource/:entity_id' do
   @project = Project.find_by(sha:params[:project_id])
   @resource = @project.resources.find_by(title: params[:resource])
   @entity = @resource.entities.find(params[:entity_id])

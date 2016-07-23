@@ -1,8 +1,9 @@
 require 'httparty'
+require 'pry'
 
 base = 'http://localhost:4567/'
 describe "entity" do
-  before :all do
+  before :each do
     res = HTTParty.post(base, headers: {
       "Content-Type": 'application/json'
     })
@@ -42,6 +43,26 @@ describe "entity" do
       id = -1
       res = HTTParty.get(@url + "/users/#{id}.json", headers: { })
       expect(res.code).to eq(404)
+    end
+  end
+  describe "create" do
+    it "responds with json" do
+      res = HTTParty.post(@url + '/users.json', follow_redirects: false)
+      expect(res.headers["content-type"]).to eq("application/json")
+    end
+  end
+  describe "patch" do
+    it "updates" do
+      res = HTTParty.post(base, headers: {
+	"Content-Type": 'application/json'
+      })
+      @url = base + res["sha"]
+      r = HTTParty.get(@url + "/users.json")
+      d = JSON.parse(r.body)
+      u = @url + "/users/" + d[-1]["id"].to_s + ".json"
+      res = HTTParty.patch(u, body: {name: 'Julia JH'}.to_json, follow_redirects: false)
+      d = JSON.parse(res.body)
+      expect(d["name"]).to eq("Julia JH")
     end
   end
 
