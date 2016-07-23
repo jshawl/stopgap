@@ -11,6 +11,7 @@ require_relative 'models/call'
 require_relative 'helpers'
 use Rack::PostBodyContentTypeParser
 set :show_exceptions, false
+enable :sessions
 
 before do
   @url = 'http://localhost:4567'
@@ -40,6 +41,8 @@ get '/' do
     o += "," if i % 3 === 0 && i != 0
     o
   }.reverse.join("")
+  session[:projects] ||= []
+  @projects = session[:projects].map{|sha| Project.find_by(sha: sha)}.compact
   erb :index
 end
 
@@ -125,6 +128,8 @@ delete '/:project_id' do; project_delete; end
 
 def project_create
   p = Project.create
+  session[:projects] ||= []
+  session[:projects] << p.sha
   Call.create(method: method)
   if request.env["CONTENT_TYPE"].match "application/json"
     response.headers['Content-Type'] = "application/json"

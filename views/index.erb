@@ -4,6 +4,20 @@
 <br>
 <%= @calls %> api calls and counting!
 
+<% unless @projects.empty? %>
+<h2>Recent Projects</h2>
+<ul>
+<% @projects.each do |project| %>
+  <li>
+    <a href='<%= url %><%= project.sha %>'><%= url %><%= project.sha %></a>
+    <small>
+      expires <span class='moment'><%= (project.ts + 86400) %></span>
+    </small>
+  </li>
+<% end %>
+</ul>
+<% end %>
+
 <h2>An API for creating APIs</h2>
 <p>Wait, what?! That's right. Create whatever resources you need.</p>
 <p>Need Kittens?
@@ -16,3 +30,9 @@
 </p>
 
 <h2>API expires 24 hours after creation</h2>
+<script src='/moment.min.js'></script>
+<script>
+  var ms = document.querySelectorAll(".moment")
+  for (var i=0; i < ms.length; i++)
+    ms[i].innerHTML = moment.utc(ms[i].innerHTML).fromNow()
+</script>
