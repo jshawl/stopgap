@@ -1,4 +1,6 @@
-# Fake Rest API
+# Stopgap
+
+A fake REST API that persists data for up to 24 hours.
 
 ## Local Setup
 
