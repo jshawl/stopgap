@@ -29,6 +29,10 @@ describe "resource" do
       res = HTTParty.get(@url + "/users")
       expect(res.code).to eq(200)
     end
+    it "responds to not-yet-existent resources" do
+      res = HTTParty.get(@url + "/pizzajams")
+      expect(res.code).to eq(200)
+    end
   end
   describe "create" do
     it "creates a resouce with a title" do
