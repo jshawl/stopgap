@@ -14,6 +14,7 @@ set :show_exceptions, false
 
 before do
   @url = 'http://localhost:4567'
+  @sha = `git rev-list -1 HEAD public/styles.css`.gsub(/\n/,'')
   response["Access-Control-Allow-Origin"] = "*"
   response["Access-Control-Allow-Methods"] = "GET, POST, PUT, PATCH, DELETE, OPTIONS"
   response.headers['Content-Type'] = "application/json" if json?
