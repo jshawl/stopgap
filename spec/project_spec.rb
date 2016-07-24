@@ -8,7 +8,7 @@ base = 'https://stopgap.store/'
 describe "project" do
   before :each do
     res = HTTParty.post(base, headers: {
-      "Content-Type": 'application/json'
+      "Content-Type" => 'application/json'
     })
     @url = base + res["sha"]
   end
@@ -19,7 +19,7 @@ describe "project" do
     end
     it "doesn't redirect json requests after creation" do
       res = HTTParty.post(base, headers: {
-        "Content-Type": 'application/json'
+        "Content-Type" => 'application/json'
       }, follow_redirects: false)
       expect(res.code).to eq(200)
     end

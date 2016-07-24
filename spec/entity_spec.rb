@@ -5,14 +5,14 @@ base = 'https://stopgap.store/'
 describe "entity" do
   before :each do
     res = HTTParty.post(base, headers: {
-      "Content-Type": 'application/json'
+      "Content-Type" => 'application/json'
     })
     @url = base + res["sha"]
   end
   describe "index" do
     it "responds w/ json" do
       res = HTTParty.get(@url + "/users", headers: {
-	"Content-Type": 'application/json'
+	"Content-Type" => 'application/json'
       })
       expect(res.headers["content-type"]).to eq("application/json")
     end
@@ -20,17 +20,17 @@ describe "entity" do
   describe "show" do
     it "responds w/ json" do
       res = HTTParty.get(@url + "/users", headers: {
-	"Content-Type": 'application/json'
+	"Content-Type" => 'application/json'
       })
       id = res[-1]["id"]
       res = HTTParty.get(@url + "/users/#{id}", headers: {
-	"Content-Type": 'application/json'
+	"Content-Type" => 'application/json'
       })
       expect(res.headers["content-type"]).to eq("application/json")
     end
     it "responds to .json w/ json" do
       res = HTTParty.get(@url + "/users", headers: {
-	"Content-Type": 'application/json'
+	"Content-Type" => 'application/json'
       })
       id = res[-1]["id"]
       res = HTTParty.get(@url + "/users/#{id}.json", headers: { })
@@ -38,7 +38,7 @@ describe "entity" do
     end
     it "handles 404 correctly" do
       res = HTTParty.get(@url + "/users", headers: {
-	"Content-Type": 'application/json'
+	"Content-Type" => 'application/json'
       })
       id = -1
       res = HTTParty.get(@url + "/users/#{id}.json", headers: { })
@@ -54,7 +54,7 @@ describe "entity" do
   describe "patch" do
     it "updates" do
       res = HTTParty.post(base, headers: {
-	"Content-Type": 'application/json'
+	"Content-Type" => 'application/json'
       })
       @url = base + res["sha"]
       r = HTTParty.get(@url + "/users.json")

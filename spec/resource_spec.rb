@@ -6,14 +6,14 @@ base = 'https://stopgap.store/'
 describe "resource" do
   before :all do
     res = HTTParty.post(base, headers: {
-      "Content-Type": 'application/json'
+      "Content-Type" => 'application/json'
     })
     @url = base + res["sha"]
   end
   describe "show" do
     it "responds to json w/ json" do
       res = HTTParty.get(@url + "/users", headers: {
-	"Content-Type": 'application/json'
+	"Content-Type" => 'application/json'
       })
       expect(res.headers["content-type"]).to eq("application/json")
     end
@@ -37,7 +37,7 @@ describe "resource" do
   describe "create" do
     it "creates a resouce with a title" do
       res = HTTParty.post(@url, headers:{
-	"Content-Type": 'application/json'
+	"Content-Type" => 'application/json'
       }, body:{title: 'radical-resource'}.to_json)
       expect(res["title"]).to eq("radical-resource")
     end
