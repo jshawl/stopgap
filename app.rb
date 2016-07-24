@@ -138,11 +138,11 @@ def project_create
   session[:projects] ||= []
   session[:projects] << p.sha
   Call.create(method: method)
-  if request.env["CONTENT_TYPE"].match "application/json"
+  if request.env["CONTENT_TYPE"] && request.env['CONTENT_TYPE'].match("x-www")
+    redirect p.sha
+  else
     response.headers['Content-Type'] = "application/json"
     p.to_json
-  else
-    redirect p.sha
   end
 end
 
