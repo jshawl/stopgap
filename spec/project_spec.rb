@@ -27,7 +27,7 @@ describe "project" do
   describe "show" do
     it "responds to json with json" do
       res = HTTParty.get(@url, headers: {
-	'Content-Type': 'application/json'
+	'Content-Type' => 'application/json'
       })
       expect(res.headers["content-type"]).to eq("application/json")
     end
@@ -47,7 +47,7 @@ describe "project" do
     end
     it "responds to json with json" do
       res = HTTParty.delete(@url, headers: {
-	'Content-Type': 'application/json'
+	'Content-Type' => 'application/json'
       }, follow_redirects: false)
       expect(res.body).to eq("")
     end
@@ -59,7 +59,7 @@ describe "project" do
     end
     it "responds with 404 status code" do
       r = HTTParty.delete(@url, headers: {
-	'Content-Type': 'application/json'
+	'Content-Type' => 'application/json'
       }, follow_redirects: false)
       res = HTTParty.get(@url, follow_redirects: false)
       expect(res.code).to eq(404)
