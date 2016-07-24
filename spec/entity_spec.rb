@@ -1,7 +1,7 @@
 require 'httparty'
 require 'pry'
 
-base = 'http://localhost:4567/'
+base = 'https://stopgap.store/'
 describe "entity" do
   before :each do
     res = HTTParty.post(base, headers: {

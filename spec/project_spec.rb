@@ -3,8 +3,7 @@ require 'pry'
 require_relative '../config/db'
 require_relative '../models/project'
 
-base = 'http://localhost:4567/'
-url = base + '00868'
+base = 'https://stopgap.store/'
 
 describe "project" do
   before :each do
@@ -16,7 +15,7 @@ describe "project" do
   describe "create" do
     it "redirects after creation" do
       res = HTTParty.post(base, follow_redirects: false)
-      expect(res.code).to eq(303)
+      expect(res.code).to eq(302)
     end
     it "doesn't redirect json requests after creation" do
       res = HTTParty.post(base, headers: {
@@ -27,24 +26,24 @@ describe "project" do
   end
   describe "show" do
     it "responds to json with json" do
-      res = HTTParty.get(url, headers: {
+      res = HTTParty.get(@url, headers: {
 	'Content-Type': 'application/json'
       })
       expect(res.headers["content-type"]).to eq("application/json")
     end
     it "responds to .json with json" do
-      res = HTTParty.get(url + ".json")
+      res = HTTParty.get(@url + ".json")
       expect(res.headers["content-type"]).to eq("application/json")
     end
     it "responds to html w/ html" do
-      res = HTTParty.get(url)
+      res = HTTParty.get(@url)
       expect(res.headers["content-type"]).to match("text/html")
     end
   end
   describe "delete" do
     it "redirects on html deletion" do
       res = HTTParty.delete(@url, follow_redirects: false)
-      expect(res.code).to eq(303)
+      expect(res.code).to eq(302)
     end
     it "responds to json with json" do
       res = HTTParty.delete(@url, headers: {

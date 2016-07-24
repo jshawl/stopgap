@@ -1,7 +1,7 @@
 require 'HTTParty'
 require 'pry'
 
-base = 'http://localhost:4567/'
+base = 'https://stopgap.store/'
 
 describe "resource" do
   before :all do
