@@ -74,9 +74,9 @@ get '/:project_id/:resource.json' do
   (@resource.entities || []).to_json
 end
 
-post '/:project_id/:resource.json' do
+post '/:project_id/:resource' do
   @project = Project.find_by(sha:params[:project_id])
-  @resource = @project.resources.find_by(title: params[:resource])
+  @resource = @project.resources.find_by(title: params[:resource].gsub(/\.json$/,''))
   Call.create(method: method)
   e = @resource.entities.create(content: @json)
   e.to_json
