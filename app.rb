@@ -109,7 +109,7 @@ post '/:project_id' do; resource_create; end
 def resource_create
   @project = Project.find_by(sha:params[:project_id])
   response.headers['Content-Type'] = "application/json"
-  r = @project.resources.create(title: params[:title] || @json)
+  r = @project.resources.create(title: params[:title] || @json["title"])
   Call.create(method: method)
   r.to_json
 end
