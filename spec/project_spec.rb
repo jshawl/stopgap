@@ -1,4 +1,4 @@
-require 'HTTParty'
+require 'httparty'
 require 'pry'
 require_relative '../config/db'
 require_relative '../models/project'
